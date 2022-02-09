@@ -37,7 +37,7 @@ knitr::write_bib(c(
 
 ## `ggscatter` in R
 
-This work is developed using the code from [RUFORUM](https://www.youtube.com/watch?v=8dOlyaKz-J0&t=39s).
+This work is developed using part of the code from [RUFORUM](https://www.youtube.com/watch?v=8dOlyaKz-J0&t=39s), specifically from 1 hr 24 minutes 55 seconds time-stamp. While watching the training on YouTube, I realized there could be more possibilities in using `ggscatter`. Good job by Makerere University staff and collaborators.
 
 
 ```{r plot}
