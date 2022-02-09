@@ -1,0 +1,12 @@
+ggplot2
+ggpubr
+knitr
+rmarkdown
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats

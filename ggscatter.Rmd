@@ -2,31 +2,107 @@
 title: "<center>**Using `ggscatter` to display important statistics on point data**</center>"
 author: "<center>Wyclife Agumba Oluoch</center>"
 date: "<center>`r Sys.time()`</center>"
-output: html_document
+bibliography: 
+  - bib/packages.bib
+nocite: '@*'
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r libs, echo=FALSE, warning=FALSE, message=FALSE, include=FALSE}
+packages <- c("base",
+              'knitr',
+              'rmarkdown',
+              'tidyverse',
+              'ggpubr')
+installed_packages <- packages %in% rownames(installed.packages())
+if(any(installed_packages == FALSE)){
+  install.packages(packages[!installed_packages])
+}
+lapply(packages, library, character.only = TRUE) |> invisible()
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r write_bib, echo=FALSE, warning=FALSE, message=FALSE, include=FALSE}
+knitr::write_bib(c(
+  .packages(), packages
+), 'bib/packages.bib')
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## `ggscatter` in R
+
+This work is developed using the code from [RUFORUM](https://www.youtube.com/watch?v=8dOlyaKz-J0&t=39s).
+
+
+```{r plot}
+library(ggpubr)
+ggscatter(data = iris, x = 'Sepal.Length', y = 'Petal.Length', add = 'reg.line', conf.int = TRUE, cor.coef = TRUE, cor.method = 'pearson', xlab = 'Sepal Length (cm)', ylab = 'Petal Length (cm)', color = 'purple', size = 3, rug = TRUE, title = 'Relationship between Sepal and Petal lengths (cm) of iris')
+```
+
+## Faceting the plot
+
+The plot can also be faceted by Species
+
+```{r}
+ggscatter(data = iris, x = 'Sepal.Length', y = 'Petal.Length', add = 'reg.line', conf.int = TRUE, cor.coef = TRUE, cor.method = 'pearson', xlab = 'Sepal Length (cm)', ylab = 'Petal Length (cm)', color = 'purple', size = 3, rug = TRUE, title = 'Relationship between Sepal and Petal lengths (cm) of iris', facet.by = 'Species')
+```
+
+## Adding ellipse
+
+It is also possible to easily add ellipses around points:
+
+```{r}
+ggscatter(data = iris, x = 'Sepal.Length', y = 'Petal.Length', add = 'reg.line', conf.int = TRUE, cor.coef = TRUE, cor.method = 'pearson', xlab = 'Sepal Length (cm)', ylab = 'Petal Length (cm)', color = 'purple', size = 3, rug = TRUE, title = 'Relationship between Sepal and Petal lengths (cm) of iris', facet.by = 'Species', ellipse = TRUE)
+```
+
+## Alter alpha of points in ellipses
+
+It is possible to change the transparency of the allipse in revealing points encapsulated by the ellipses.
+
+```{r}
+ggscatter(data = iris, x = 'Sepal.Length', y = 'Petal.Length', add = 'reg.line', conf.int = TRUE, cor.coef = TRUE, cor.method = 'pearson', xlab = 'Sepal Length (cm)', ylab = 'Petal Length (cm)', color = 'purple', size = 3, rug = TRUE, title = 'Relationship between Sepal and Petal lengths (cm) of iris', facet.by = 'Species', ellipse = TRUE, ellipse.alpha = 0.5)
+```
+
+## Mean point
+
+Further, it is possible to add mean points on the plots. One can thus easily tell the mean point of the data.
+
+```{r}
+ggscatter(data = iris, x = 'Sepal.Length', y = 'Petal.Length', add = 'reg.line', conf.int = TRUE, cor.coef = TRUE, cor.method = 'pearson', xlab = 'Sepal Length (cm)', ylab = 'Petal Length (cm)', color = 'purple', size = 3, rug = TRUE, title = 'Relationship between Sepal and Petal lengths (cm) of iris', facet.by = 'Species', ellipse = TRUE, ellipse.alpha = 0.5, mean.point = TRUE)
+```
+
+## Star plot
+
+Can also generate spokes from the mean to the data points, that is, star plot.
+
+```{r}
+ggscatter(data = iris, x = 'Sepal.Length', y = 'Petal.Length', add = 'reg.line', conf.int = TRUE, cor.coef = TRUE, cor.method = 'pearson', xlab = 'Sepal Length (cm)', ylab = 'Petal Length (cm)', color = 'purple', size = 3, rug = TRUE, title = 'Relationship between Sepal and Petal lengths (cm) of iris', facet.by = 'Species', ellipse = TRUE, ellipse.alpha = 0.5, mean.point = TRUE, star.plot = TRUE)
+```
+
+## Themes
+
+Can use any of the many themes from `ggplot2` package.
+
+```{r}
+library(ggplot2)
+ggscatter(data = iris, x = 'Sepal.Length', y = 'Petal.Length', add = 'reg.line', conf.int = TRUE, cor.coef = TRUE, cor.method = 'pearson', xlab = 'Sepal Length (cm)', ylab = 'Petal Length (cm)', color = 'purple', size = 3, rug = TRUE, title = 'Relationship between Sepal and Petal lengths (cm) of iris', facet.by = 'Species', ellipse = TRUE, ellipse.alpha = 0.3, mean.point = TRUE, star.plot = TRUE, ggtheme = theme_dark())
+```
+
+## Possibilities
+
+There are many more possibilities in `ggscatter` that one can use to design plot to their liking.
+
+Best of luck coding in R!
+
+
+## References
+
+
 
 
